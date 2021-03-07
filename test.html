@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Init */
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            width: 100vw;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+
+
+
+        @media screen and (max-width: 375px) {
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                border: 1px solid red;
+                justify-content: space-between;
+            }
+
+            .hamburger-menu-icon {
+                background-color: green;
+                justify-self: flex-start;
+            }
+            .searchContainer{
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+            }
+
+            .searchbar {
+                background-color: coral;
+                justify-self: center;
+            }
+
+        }
+        /* Debugging Mode */
+        div {
+            border: 1px solid purple;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="header">
+        <div>
+            <div class="hamburger-menu-icon">🍔</div>
+        </div>
+
+        <div class="searchContainer">
+            <div class="searchbar">Search Me</div>
+        </div>
+
+    </div>
+    <div class="main">
+        <div class="task-lists"></div>
+        <div class="input-area"></div>
+    </div>
+</body>
+
+</html>
