@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Init */
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            width: 100vw;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+
+        /* Devs */
+        body {
+            border: 3px dotted coral;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font: 900 24px/1.4 -system-ui, sans-serif;
+        }
+
+        label {
+            border: 1px solid slateblue;
+        }
+
+        /*  */
+        .control-me::after {
+            content: "😃";
+            font-size: 100px;
+        }
+
+        #toggle:checked~.control-me::after {
+            content: "😩";
+        }
+
+
+        /* Variable Declaration */
+        :root {
+            /* Material Guidlines */
+            --hamburger-icon-height: 48px;
+            --hamburger-icon-width: 48px;
+            --hamburger-line-width: 48px;
+            --hamburger-line-height: 10px;
+            --hamburger-line-radius: 10px;
+            --hamburger-line-color: #202020;
+        }
+
+
+        label {
+            position: absolute;
+            height: var(--hamburger-icon-height);
+            width: var(--hamburger-icon-width);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+
+        }
+
+        label::before, label::after {
+            content: "";
+            background-color: var(--hamburger-line-color);
+            height: var(--hamburger-line-height);
+            width: var(--hamburger-line-width);
+            border-radius: var(--hamburger-line-radius);
+        }
+        
+        /* Hide Checkbox */
+        .visually-hidden {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <label for="toggle"></label>
+
+        <input type="checkbox" id="toggle" class="visually-hidden">
+
+        <div class="control-me"></div>
+    </div>
+</body>
+
+</html>
