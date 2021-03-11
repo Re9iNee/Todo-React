@@ -58,6 +58,7 @@
             --hamburger-line-height: 10px;
             --hamburger-line-radius: 10px;
             --hamburger-line-color: #202020;
+            --hamburger-lines-margin: 10px;
         }
 
 
@@ -83,11 +84,11 @@
         }
         label::after {
             top: 19px;
-            margin-top: 10px;
+            margin-top: var(--hamburger-lines-margin);
         }
         label::before {
             top: 19px;
-            margin-top: -10px;
+            margin-top: calc(-1 * var(--hamburger-lines-margin));
         }
         
         /* Hide Checkbox */
