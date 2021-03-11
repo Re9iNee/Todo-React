@@ -49,7 +49,7 @@
         }
 
 
-        /* Variable Declaration */
+        /* Variable Declaration (Dynamics) */
         :root {
             /* Material Guidlines */
             --hamburger-icon-height: 48px;
@@ -79,6 +79,15 @@
             height: var(--hamburger-line-height);
             width: var(--hamburger-line-width);
             border-radius: var(--hamburger-line-radius);
+            position: absolute;
+        }
+        label::after {
+            top: 19px;
+            margin-top: 10px;
+        }
+        label::before {
+            top: 19px;
+            margin-top: -10px;
         }
         
         /* Hide Checkbox */
@@ -90,9 +99,9 @@
 
 <body>
     <div>
-        <label for="toggle"></label>
 
         <input type="checkbox" id="toggle" class="visually-hidden">
+        <label for="toggle" class="something"></label>
 
         <div class="control-me"></div>
     </div>
