@@ -94,6 +94,20 @@
         .visually-hidden {
             opacity: 0;
         }
+
+        /* Animating on checked */
+        label::before, label::after {
+            transition: .5s all ease;
+        }
+        #toggle:checked ~ label::after, #toggle:checked ~ label::before {
+            margin: 0;
+        }
+        #toggle:checked ~ .something::after {
+            transform: rotate3d(0, 0, 1, -45deg);
+        }
+        #toggle:checked ~ .something::before {
+            transform: rotate3d(0, 0, 1, 45deg);
+        }
     </style>
 </head>
 
