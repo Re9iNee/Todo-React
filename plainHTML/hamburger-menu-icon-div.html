@@ -26,18 +26,6 @@
         }
 
         /* Imported */
-
-        /*  */
-        .control-me::after {
-            content: "😃";
-            font-size: 100px;
-        }
-
-        #toggle:checked .control-me::after {
-            content: "😩";
-        }
-
-
         /* Variable Declaration (Dynamics) */
         :root {
             /* Material Guidlines */
@@ -113,7 +101,7 @@
         }
 
         .control-me {
-            background-color: red;
+            background-color: lightyellow;
             display: flex;
             justify-content: center;
             flex-grow: 4;
@@ -133,6 +121,10 @@
         .menu-hide {
             transform: translate3d(0, -100%, 0);
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -142,7 +134,19 @@
         <label for="toggle" class="something"></label>
     </div>
     <div class="control-me">
-
+        <div>
+            <div class="search"></div>
+            <div>
+                <button id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="searchResults">
+            <h1 class="CategoryHeader">Categories</h1>
+            <div class="category-view"></div>
+            <div class="divider hidden"></div>
+            <div class="task-view-search-result hidden" ></div>
+        </div>
     </div>
 </body>
 <script>
