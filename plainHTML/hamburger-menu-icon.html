@@ -59,6 +59,7 @@
             --hamburger-line-radius: 3px;
             --hamburger-line-color: #e1e1e1;
             --hamburger-lines-margin: 6px;
+            --hamburger-icon-z-index: 1;
         }
 
 
@@ -66,6 +67,7 @@
             position: relative;
             height: var(--hamburger-icon-height);
             width: var(--hamburger-icon-width);
+            z-index: var(--hamburger-icon-z-index);
 
             display: flex;
             align-items: center;
@@ -74,7 +76,8 @@
 
         }
 
-        label::before, label::after {
+        label::before,
+        label::after {
             content: "";
             background-color: var(--hamburger-line-color);
             height: var(--hamburger-line-height);
@@ -82,13 +85,15 @@
             border-radius: var(--hamburger-line-radius);
             position: absolute;
         }
+
         label::after {
             margin-top: var(--hamburger-lines-margin);
         }
+
         label::before {
             margin-top: calc(-1 * var(--hamburger-lines-margin));
         }
-        
+
         /* Hide Checkbox */
         .visually-hidden {
             display: none;
@@ -96,16 +101,21 @@
         }
 
         /* Animating on checked */
-        label::before, label::after {
+        label::before,
+        label::after {
             transition: .5s all ease, .1s margin ease;
         }
-        #toggle:checked ~ label::after, #toggle:checked ~ label::before {
+
+        #toggle:checked~label::after,
+        #toggle:checked~label::before {
             margin: 0;
         }
-        #toggle:checked ~ .something::after {
+
+        #toggle:checked~.something::after {
             transform: rotate3d(0, 0, 1, -45deg);
         }
-        #toggle:checked ~ .something::before {
+
+        #toggle:checked~.something::before {
             transform: rotate3d(0, 0, 1, 45deg);
         }
     </style>
