@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Init */
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            width: 100vw;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+
+        /* Devs */
+        body {
+            border: 1px dotted red;
+        }
+
+        /* Imported */
+
+        /*  */
+        .control-me::after {
+            content: "😃";
+            font-size: 100px;
+        }
+
+        #toggle:checked .control-me::after {
+            content: "😩";
+        }
+
+
+        /* Variable Declaration (Dynamics) */
+        :root {
+            /* Material Guidlines */
+            --hamburger-icon-height: 48px;
+            --hamburger-icon-width: 48px;
+            --hamburger-line-width: 38px;
+            --hamburger-line-height: 7px;
+            --hamburger-line-radius: 3px;
+            --hamburger-line-color: #e1e1e1;
+            --hamburger-lines-margin: 6px;
+        }
+
+
+        label {
+            position: relative;
+            height: var(--hamburger-icon-height);
+            width: var(--hamburger-icon-width);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+
+        }
+
+        label::before,
+        label::after {
+            content: "";
+            background-color: var(--hamburger-line-color);
+            height: var(--hamburger-line-height);
+            width: var(--hamburger-line-width);
+            border-radius: var(--hamburger-line-radius);
+            position: absolute;
+        }
+
+        label::after {
+            margin-top: var(--hamburger-lines-margin);
+        }
+
+        label::before {
+            margin-top: calc(-1 * var(--hamburger-lines-margin));
+        }
+
+        /* Hide Checkbox */
+        .visually-hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        /* Animating on checked */
+        label::before,
+        label::after {
+            transition: .5s all ease, .1s margin ease;
+        }
+
+        #toggle:checked~label::after,
+        #toggle:checked~label::before {
+            margin: 0;
+        }
+
+        #toggle:checked~.something::after {
+            transform: rotate3d(0, 0, 1, -45deg);
+        }
+
+        #toggle:checked~.something::before {
+            transform: rotate3d(0, 0, 1, 45deg);
+        }
+        /* Menu */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .control-me {
+            background-color: red;
+            display: flex;
+            justify-content: center;
+            flex-grow: 4;
+
+
+            transition: .5s all ease;
+
+
+            transform: translate3d(0,-100%,0);
+            z-index: -1;
+        }
+        .menu-show {
+            transform: translate3d(0, 0, 0);
+        }
+        .menu-hide {
+            transform: translate3d(0, -100%, 0);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="checkbox" id="toggle" class="visually-hidden">
+        <label for="toggle" class="something"></label>
+    </div>
+    <div class="control-me">
+
+    </div>
+</body>
+<script>
+    function HamburgerMenu(active){
+        let dom = document.getElementsByClassName("control-me")[0]
+        if (active){
+            dom.classList.remove("menu-hide");
+            dom.classList.add("menu-show");
+        }else {
+            dom.classList.add("menu-hide");
+            dom.classList.remove("menu-show")
+        }
+    }
+    let checkBox = document.getElementById("toggle");
+
+    checkBox.addEventListener("click", e => {
+        HamburgerMenu(checkBox.checked)
+    })
+</script>
+
+</html>
