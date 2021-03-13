@@ -105,11 +105,13 @@
         #toggle:checked~.something::before {
             transform: rotate3d(0, 0, 1, 45deg);
         }
+
         /* Menu */
         body {
             display: flex;
             flex-direction: column;
         }
+
         .control-me {
             background-color: red;
             display: flex;
@@ -120,20 +122,23 @@
             transition: .5s all ease;
 
 
-            transform: translate3d(0,-100%,0);
+            transform: translate3d(0, -100%, 0);
             z-index: -1;
         }
+
         .menu-show {
             transform: translate3d(0, 0, 0);
         }
+
         .menu-hide {
             transform: translate3d(0, -100%, 0);
         }
     </style>
 </head>
+
 <body>
     <div>
-        <input type="checkbox" id="toggle" class="visually-hidden">
+        <input type="checkbox" id="toggle" class="visually-hidden" checked>
         <label for="toggle" class="something"></label>
     </div>
     <div class="control-me">
@@ -153,7 +158,10 @@
     }
     let checkBox = document.getElementById("toggle");
 
-    checkBox.addEventListener("click", e => {
+    checkBox.addEventListener("click", () => {
+        HamburgerMenu(checkBox.checked)
+    })
+    window.addEventListener("load", () => {
         HamburgerMenu(checkBox.checked)
     })
 </script>
