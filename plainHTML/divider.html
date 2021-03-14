@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +19,71 @@
         *::before {
             box-sizing: border-box;
         }
+
         /* Devs */
+        body {
+            background: rgb(44, 44, 44);
+        }
+
+        *,
+        *::after,
+        *::before {
+            color: #e1e1e1;
+            font-size: 20px;
+        }
+
         /* Divider */
+        .divider {
+            border-color: rgb(225, 225, 225, 0.3);
+            border-width: 2px;
+            width: 100%;
+            border-style: solid;
+            border-radius: 5px;
+        }
+        .half {
+            width: 69%!important;
+        }
         
+
+
+        /* Divider Shadowed */
+        .shadow-divider {
+            width: 100%;
+            height: 2px;
+            box-shadow: inset 0px 0px 2px #e1e1e1;
+        }
+
+        /* display */
+        div:not([class]) {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
+
 <body>
-    
+    <div>
+        <pre>Full Divider</pre>
+        <div class="divider"></div>
+    </div>
+    <div>
+        <pre>Half Divider</pre>
+        <div class="divider half"></div>
+    </div>
+    <div>
+        <pre>Shadowed Divider</pre>
+        <div class="shadow-divider"></div>
+    </div>
+    <div>
+        <pre>Shadowed Divider Half</pre>
+        <div class="shadow-divider half"></div>
+    </div>
+
+
+
+    <div></div>
 </body>
+
 </html>
