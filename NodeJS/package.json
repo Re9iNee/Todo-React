@@ -7,5 +7,9 @@
     "test": "nodemon server.js"
   },
   "author": "Re9iNee",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
 }
