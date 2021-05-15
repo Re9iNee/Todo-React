@@ -1,5 +1,5 @@
 let app = angular.module('myApp', ['ngAnimate'])
-app.controller('myCtrl', ($scope, $interval) => {
+app.controller('myCtrl', async ($scope, $interval) => {
     // Init:
     let dbName = 'list5'
     $scope.searchMode = false;
@@ -103,12 +103,14 @@ app.controller('myCtrl', ($scope, $interval) => {
     $scope.stopPropagation = (event) => {
         event.stopPropagation();
     }
-    $scope.getSavedList = (id) => {
-        let str = localStorage.getItem(id);
+    $scope.getSavedList = async (id) => {
+        // TODO: window.location
+        return await fetch("/category/list5", {method: "GET"}).then(resp => {})
         return str ? JSON.parse(str) : new Array();
     }
     $scope.saveList = (id, value) => {
         try {
+            // TODO: fetch(PUT) with JSON data
             localStorage.setItem(id, JSON.stringify(value));
             return true;
         } catch {
