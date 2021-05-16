@@ -6,9 +6,13 @@ const fs = require("fs")
 // NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
 
 
+// TODO: Connect to MongoDB Clusters
+// TODO: Create Mongo Database
+
 // TODO: Categories
 // TODO: Create -> new Category.JSON file
 // TODO: Read -> load all Category.JSON files - will display at the sidebar
+// TODO: in loading method -> WHERE DELETED = false.
 // TODO: Update -> renaming a specific Category.JSON file
 // TODO: Delete -> removing a specific Category.JSON file (or renaming its file extension to use it later)
 
