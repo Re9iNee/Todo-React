@@ -25,3 +25,9 @@ yarn-error.log*
 # Node Modules Cache
 /ReactSide/node_modules/.cache
 ReactSide/node_modules/.cache/.eslintcache
+*.mov
+
+
+
+/NodeJS/node_modules
+.gitignore

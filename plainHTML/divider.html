@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Init */
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            width: 100vw;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+
+        /* Devs */
+        body {
+            background: rgb(44, 44, 44);
+        }
+
+        *,
+        *::after,
+        *::before {
+            color: #e1e1e1;
+            font-size: 20px;
+        }
+
+        /* display */
+        div:not([class]) {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Divider */
+        .divider {
+            border-color: var(--divider-color);
+            border-width: var(--divider-border-width);
+            width: 100%;
+            border-style: solid;
+            border-radius: var(--divider-radius);
+        }
+        .half {
+            width: var(--divider-half-width)!important;
+        }
+        
+
+
+        /* Divider Shadowed */
+        .shadow-divider {
+            width: 100%;
+            height: var(--divider-border-width);
+            box-shadow: inset 0px 0px 2px var(--divider-shadow-color);
+        }
+
+        /* Variable Declarations (Dynamics) */
+        :root {
+            --divider-border-width: 2px;
+            --divider-half-width: 69%;
+            --divider-color: rgb(225, 225, 225, 0.3);
+            --divider-radius: 5px;
+
+
+            --divider-shadow-blur-radius: 2px;
+            --divider-shadow-color: rgb(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <pre>Full Divider</pre>
+        <div class="divider"></div>
+    </div>
+    <div>
+        <pre>Half Divider</pre>
+        <div class="divider half"></div>
+    </div>
+    <div>
+        <pre>Shadowed Divider</pre>
+        <div class="shadow-divider"></div>
+    </div>
+    <div>
+        <pre>Shadowed Divider Half</pre>
+        <div class="shadow-divider half"></div>
+    </div>
+
+
+
+    <div></div>
+</body>
+
+</html>

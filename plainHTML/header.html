@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Init */
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            width: 100vw;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+        /* Devs  */
+        body {
+            border: 1px dotted red;
+        }
+        div {
+            border: 1px solid green;
+        }
+        /* Varibales Declaration (Dynamics) */
+        :root {
+            --header-child-width: 48px;
+            --header-child-height: var(--header-child-width);
+
+        }
+        /* Display */
+        .header {
+            height: 60px;
+            background-color: grey;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header > * {
+            width: var(--header-child-height);
+            height: var(--header-child-width);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="hamburger-icon.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="hamburger-menu">
+            <input type="checkbox" id="toggle" class="visually-hidden">
+            <label for="toggle" class="something"></label>
+            </div>
+        <div class="logo">
+            <img src="./apple.svg" alt="">
+        </div>
+        <div class="thirdLogo">
+            <img src="./store.svg" alt="">
+        </div>
+    </div>
+
+</body>
+
+</html>

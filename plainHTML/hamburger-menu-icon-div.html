@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="hamburger-icon.css">
+    <style>
+        /* Init */
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            width: 100vw;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+
+        /* Devs */
+        body {
+            border: 1px dotted red;
+        }
+
+        .hamburger-menu-div>* {
+            border: red 1px solid;
+        }
+
+        .category-view>a {
+            border: 1px solid greenyellow;
+        }
+
+        .category-view {
+            border: 1px solid lawngreen;
+        }
+
+        /* Display */
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hamburger-menu-div {
+            background-color: lightyellow;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 4;
+            transition: .5s all ease;
+            transform: translate3d(0, 0, 0);
+            /* height: 100%; */
+        }
+
+        .menu-show {
+            transform: translate3d(0, 0, 0);
+        }
+
+        .menu-hide {
+            transform: translate3d(0, -100%, 0);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Hamburger Menu Contents */
+        .hamburger-menu-div>* {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        /* Details */
+        .search-wrapper {
+            justify-content: space-around;
+        }
+
+        .divider {
+            display: flex;
+        }
+
+        .divider::after {
+            content: "";
+            background: var(--hamburger-menu-divider-background);
+            width: var(--hamburger-menu-divider-width);
+            height: var(--hamburger-menu-divider-heigh);
+        }
+
+        .category-view {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .category-view>a {
+            text-align: center;
+        }
+
+        .half-divider:not(:last-of-type) {
+            width: var(--half-divider-width);
+            border: var(--half-divider-border-width) solid var(--half-divider-border-color);
+            border-radius: var(--half-divider-border-radius);
+        }
+
+        .search-results {
+            flex-direction: column;
+            justify-content: start;
+            flex-grow: 5;
+        }
+
+        /* Variable Declarations (Dynamics) */
+        :root {
+            --hamburger-menu-divider-heigh: 3px;
+            --hamburger-menu-divider-width: 100%;
+            --hamburger-menu-divider-background: grey;
+
+            --half-divider-width: 69%;
+            --half-divider-border-radius: 10px;
+            --half-divider-border-color: rgba(99, 99, 99, 0.3);
+            --half-divider-border-width: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <input type="checkbox" id="toggle" class="visually-hidden" checked>
+        <label for="toggle" class="something"></label>
+    </div>
+    <div class="hamburger-menu-div">
+        <div class="search-wrapper">
+            <div class="hamburger-menu-search">
+                <input type="text" placeholder="Search">
+            </div>
+            <div>
+                <button id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="search-results">
+            <div class="category-view">
+                <h1 class="CategoryHeader">Categories</h1>
+                <a href="#">Today</a>
+                <div class="half-divider"></div>
+                <a href="#">Programming</a>
+                <div class="half-divider"></div>
+                <a href="#">University</a>
+                <div class="half-divider"></div>
+            </div>
+            <div class="divider"></div>
+            <div class="category-view">
+                <h1 class="CategoryHeader">Tasks</h1>
+                <a href="#">Buy Book</a>
+                <div class="half-divider"></div>
+                <a href="#">Programming</a>
+                <div class="half-divider"></div>
+                <a href="#">Date</a>
+                <div class="half-divider"></div>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function HamburgerMenu(active) {
+        let dom = document.getElementsByClassName("hamburger-menu-div")[0]
+        if (active) {
+            dom.classList.remove("menu-hide");
+            dom.classList.add("menu-show");
+        } else {
+            dom.classList.add("menu-hide");
+            dom.classList.remove("menu-show")
+        }
+    }
+    let checkBox = document.getElementById("toggle");
+
+    checkBox.addEventListener("click", () => {
+        HamburgerMenu(checkBox.checked)
+    })
+    window.addEventListener("load", () => {
+        HamburgerMenu(checkBox.checked)
+    })
+</script>
+
+</html>
