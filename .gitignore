@@ -31,3 +31,6 @@ ReactSide/node_modules/.cache/.eslintcache
 
 /NodeJS/node_modules
 .gitignore
+International\ Imamreza\ University\ /src/node_modules 
+International\ Imamreza\ University\ /src/.vscode 
+.env
