@@ -1,0 +1,4 @@
+check inserted for not null values (check not null values)
+check for duplicates (check for unique columns)
+check for any column custome validations
+put 'N' before any given string.
