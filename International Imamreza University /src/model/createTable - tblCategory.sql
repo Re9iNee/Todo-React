@@ -8,6 +8,6 @@ CREATE TABLE tblCategory (
     favourite BIT DEFAULT 0 NOT NULL,
     checked BIT DEFAULT 0 NOT NULL,
     deleted BIT DEFAULT 0 NOT NULL,
-    description TEXT
+    description NVARCHAR(MAX)
 );
 INSERT INTO tblCategory (title, dateCreated, timeCreated) VALUES ('Today', '2020-05-17', '01:11');
