@@ -20,10 +20,9 @@ const ws_loadCategory = async (connection, filters = new Object(null), customQue
     ,[timeModified]
     ,[favourite]
     ,[checked]
-    ,[deleted]
     ,[description]
     FROM [${DB_DATABASE}].[dbo].[tblCategory]
-    WHERE deleted = 0;`;
+    WHERE deleted = 0 `;
     const {
         pool,
         poolConnect
