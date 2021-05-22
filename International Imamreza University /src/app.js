@@ -3,7 +3,7 @@ const dotEnv = require("dotenv");
 const bodyPaser = require('body-parser');
 const path = require('path');
 
-// const cashAssistanceDetailRouter = require("./router/cashAssistanceDetail");
+const categoryRoutes = require("./router/category");
 
 
 // NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
@@ -13,7 +13,7 @@ const path = require('path');
 
 // TODO: Categories
 // TODO: Create -> new Category.JSON file
-// TODO: Read -> load all Category.JSON files - will display at the sidebar
+// TODO: display all categories at the sidebar
 // TODO: in loading method -> WHERE DELETED = false.
 // TODO: Update -> renaming a specific Category.JSON file
 // TODO: Delete -> removing a specific Category.JSON file (or renaming its file extension to use it later)
@@ -59,9 +59,10 @@ app.use(express.json({
 
 
 
-/*  TASK 9 */
+/*  TASK 1 */
 
-// app.use(cashAssistanceDetailRouter)
+app.use(categoryRoutes);
+
 
 
 
@@ -71,15 +72,11 @@ const {
     poolConnect
 } = require("./utils/todoDB");
 const {
-    ws_loadCategory
+    ws_loadCategory,
 } = require("./services/category");
 
 (async () => {
-    const result = await ws_loadCategory({
-        pool,
-        poolConnect
-    });
-    debugger
+
 })();
 /* -----  End of Testing Area ---- */
 
