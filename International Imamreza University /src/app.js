@@ -6,7 +6,24 @@ const path = require('path');
 // const cashAssistanceDetailRouter = require("./router/cashAssistanceDetail");
 
 
+// NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
 
+
+// TODO: Connect to MSSQL Clusters
+
+// TODO: Categories
+// TODO: Create -> new Category.JSON file
+// TODO: Read -> load all Category.JSON files - will display at the sidebar
+// TODO: in loading method -> WHERE DELETED = false.
+// TODO: Update -> renaming a specific Category.JSON file
+// TODO: Delete -> removing a specific Category.JSON file (or renaming its file extension to use it later)
+
+
+// TODO: Tasks
+// TODO: Create -> insert a task into an specific Category.JSON file
+// TODO: Read -> load all task from an specific Category.JSON file
+// TODO: Update -> 1. renaming  / 2. add2Fav / 3. markAsDone
+// TODO: DELETE -> remove a task from specific Category.JSON file 
 
 
 
@@ -52,8 +69,18 @@ app.use(express.json({
 const {
     pool,
     poolConnect
-} = require("./utils/charityDb");
-(async () => {})();
+} = require("./utils/todoDB");
+const {
+    ws_loadCategory
+} = require("./services/category");
+
+(async () => {
+    const result = await ws_loadCategory({
+        pool,
+        poolConnect
+    });
+    debugger
+})();
 /* -----  End of Testing Area ---- */
 
 app.listen(port, () => console.log(`Listening on ${port}`));
