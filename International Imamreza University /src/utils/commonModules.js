@@ -193,6 +193,19 @@ const NotNullColumnsFilled = (obj, ...columns) => {
     return true;
 }
 
+
+const getDate = (d) => {
+    let year = d.getFullYear();
+    let month = addZero(d.getMonth() + 1, 2);
+    let day = addZero(d.getDate(), 2);
+    return `${year}-${month}-${day}`;
+}
+const getTime = (d) => {
+    let hours = addZero(d.getHours(), 2);
+    let minutes = addZero(d.getMinutes(), 2);
+    return `${hours}:${minutes}`;
+}
+
 module.exports = {
     normalizeQueryString,
     toHex,
@@ -206,4 +219,6 @@ module.exports = {
     sqlDate,
     endIsLenghty,
     NotNullColumnsFilled,
+    getTime,
+    getDate,
 }
