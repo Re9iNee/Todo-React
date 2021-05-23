@@ -1,5 +1,6 @@
 const {
     ws_loadCategory,
+    ws_createCategory
 } = require("../services/category");
 const {
     poolConnect,
@@ -27,4 +28,16 @@ exports.getCategory = async (req, res) => {
     res.send({
         result
     })
+}
+
+exports.makeCategory = async (req, res) => {
+    // T02 - Method 02
+    // Attach params to body as an JSON Format
+    const result = await ws_createCategory({
+        pool,
+        poolConnect
+    }, req.body);
+    res.send({
+        result
+    });
 }
