@@ -155,7 +155,7 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
                 status: "Failed",
                 msg: "Error Creating Row, Violation of unique values",
                 uniqueColumn: "title",
-                details
+                newValues
             }
     }
 
@@ -165,7 +165,6 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
         const {
             dateModified
         } = newValues;
-        // TODO: solve getting createdDate from database.
         // loadDate:  Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time) => 2021-09-23
         const dateCreated = loadDate(filteredRow.recordset[0].dateCreated.toString())
         let start = new sqlDate(dateCreated.split('-'));
