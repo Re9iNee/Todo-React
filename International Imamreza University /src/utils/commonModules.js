@@ -193,6 +193,31 @@ const NotNullColumnsFilled = (obj, ...columns) => {
     return true;
 }
 
+
+const getDate = (d) => {
+    let year = d.getFullYear();
+    let month = addZero(d.getMonth() + 1, 2);
+    let day = addZero(d.getDate(), 2);
+    return `${year}-${month}-${day}`;
+}
+const getTime = (d) => {
+    let hours = addZero(d.getHours(), 2);
+    let minutes = addZero(d.getMinutes(), 2);
+    return `${hours}:${minutes}`;
+}
+
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const loadDate = (str) => {
+    // str: Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time)
+    let strArr = str.split(" ");
+    const monthAb = strArr[1];
+    const day = addZero(strArr[2], 2);
+    const year = strArr[3];
+    const month = addZero(months.indexOf(monthAb) + 1, 2);
+    return `${year}-${month}-${day}`;
+    // YYYY-MM-DD
+}
+
 module.exports = {
     normalizeQueryString,
     toHex,
@@ -206,4 +231,7 @@ module.exports = {
     sqlDate,
     endIsLenghty,
     NotNullColumnsFilled,
+    getTime,
+    getDate,
+    loadDate,
 }

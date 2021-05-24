@@ -9,14 +9,10 @@ const categoryRoutes = require("./router/category");
 // NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
 
 
-// TODO: Connect to MSSQL Clusters
 
 // TODO: Categories
-// TODO: Create -> new Category.JSON file
 // TODO: display all categories at the sidebar
-// TODO: in loading method -> WHERE DELETED = false.
-// TODO: Update -> renaming a specific Category.JSON file
-// TODO: Delete -> removing a specific Category.JSON file (or renaming its file extension to use it later)
+// ANCHOR: PURGE all deleted categories? - or purge them one by one.
 
 
 // TODO: Tasks
@@ -59,7 +55,7 @@ app.use(express.json({
 
 
 
-/*  TASK 1 */
+/*  TASK 2 */
 
 app.use(categoryRoutes);
 
@@ -71,12 +67,8 @@ const {
     pool,
     poolConnect
 } = require("./utils/todoDB");
-const {
-    ws_loadCategory,
-} = require("./services/category");
-
 (async () => {
-
+    // STUB
 })();
 /* -----  End of Testing Area ---- */
 
