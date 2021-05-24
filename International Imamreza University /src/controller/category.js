@@ -1,7 +1,8 @@
 const {
     ws_loadCategory,
     ws_createCategory,
-    ws_updateCategory
+    ws_updateCategory,
+    ws_deleteCategory
 } = require("../services/category");
 const {
     poolConnect,
@@ -53,6 +54,18 @@ exports.updateCategory = async (req, res) => {
         pool,
         poolConnect
     }, req.body.categoryId, req.body.newValues);
+    res.send({
+        result
+    });
+}
+
+exports.deleteCategory = async (req, res) => {
+    // T02 - Method 04
+    // parameters: sql connection, categoryId
+    const result = await ws_deleteCategory({
+        pool,
+        poolConnect
+    }, req.body.categoryId);
     res.send({
         result
     });
