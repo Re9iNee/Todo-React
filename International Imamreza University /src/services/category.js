@@ -210,8 +210,23 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
     }
 }
 
+const ws_deleteCategory = async (connection, categoryId) => {
+    // NOTE: we (soft)delete a row by updating its deleted column to -> true
+    const filteredRow = await ws_loadCategory(connection, {categoryId}, null, 1);
+    if (!filteredRow.recordset.length) 
+        return {
+            status: "Failed",
+            msg: "Enter a valid categoryId",
+            categoryId
+        }
+    return await ws_updateCategory(connection, categoryId, {
+        deleted: 1
+    });
+}
+
 module.exports = {
     ws_loadCategory,
     ws_createCategory,
     ws_updateCategory,
+    ws_deleteCategory
 }
