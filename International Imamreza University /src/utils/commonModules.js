@@ -206,6 +206,18 @@ const getTime = (d) => {
     return `${hours}:${minutes}`;
 }
 
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const loadDate = (str) => {
+    // str: Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time)
+    let strArr = str.split(" ");
+    const monthAb = strArr[1];
+    const day = addZero(strArr[2], 2);
+    const year = strArr[3];
+    const month = addZero(months.indexOf(monthAb) + 1, 2);
+    return `${year}-${month}-${day}`;
+    // YYYY-MM-DD
+}
+
 module.exports = {
     normalizeQueryString,
     toHex,
@@ -221,4 +233,5 @@ module.exports = {
     NotNullColumnsFilled,
     getTime,
     getDate,
+    loadDate,
 }
