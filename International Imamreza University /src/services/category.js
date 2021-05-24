@@ -6,7 +6,9 @@ const {
     sqlDate,
     endIsLenghty,
     getDate,
-    getTime
+    getTime,
+    setToQueryString,
+    loadDate,
 } = require("../utils/commonModules");
 
 require("dotenv").config({
@@ -120,17 +122,97 @@ const ws_createCategory = async (connection, details = new Object(null)) => {
     }
 }
 
-// TODO: for update method
-//  // check for custome Validation
-//     // NOTE: dateModified should be after dateCreated
-//     if ("dateModified" in details) {
-//         let start = new sqlDate(dateCreated.split('-'));
-//         let end = new sqlDate(dateModified.split('-'));
-//         let sth = endIsLenghty(start, end);
-//         debugger
-//     }
+
+
+const ws_updateCategory = async (connection, categoryId, newValues = new Object(null)) => {
+    // inputs and params
+    // NOTE: title, dateModified, timeModified, favourite, checked, description
+    if (!newValues)
+        return {
+            status: "Failed",
+            msg: "Send newValues to change table records",
+            newValues
+        }
+    if (!categoryId)
+        return {
+            status: "Failed",
+            msg: "Fill categoryId inside request JSON body",
+            categoryId
+        }
+    const filteredRow = await ws_loadCategory(connection, {
+        categoryId
+    }, null, 1);
+
+    if ("title" in newValues) {
+        const {
+            title
+        } = newValues;
+        const duplicateUniqueTitle = await checkDuplicate(connection, {
+            title
+        }, ws_loadCategory);
+        if (duplicateUniqueTitle)
+            return {
+                status: "Failed",
+                msg: "Error Creating Row, Violation of unique values",
+                uniqueColumn: "title",
+                details
+            }
+    }
+
+    //  check for custome Validation
+    // NOTE: dateModified should be bigger than dateCreated
+    if ("dateModified" in newValues) {
+        const {
+            dateModified
+        } = newValues;
+        // TODO: solve getting createdDate from database.
+        // loadDate:  Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time) => 2021-09-23
+        const dateCreated = loadDate(filteredRow.recordset[0].dateCreated.toString())
+        let start = new sqlDate(dateCreated.split('-'));
+        let end = new sqlDate(dateModified.split('-'));
+        if (!endIsLenghty(start, end))
+            return {
+                status: "Failed",
+                msg: "dateModified should be bigger than createdDate",
+                dateCreated,
+                dateModified
+            }
+    }
+
+
+    let queryString = `UPDATE 
+    [${DB_DATABASE}].[dbo].[tblCategory] SET `;
+    // setToQueryString returns: UPDATE ... SET sth = 2 , test = 3
+    queryString = setToQueryString(queryString, newValues) + " WHERE 1 = 1 ";
+    queryString = normalizeQueryString(queryString, {
+        categoryId
+    });
+
+    const {
+        pool,
+        poolConnect
+    } = connection;
+    // ensures that the pool has been created
+    await poolConnect;
+
+    try {
+        const request = pool.request();
+        const updateResult = await request.query(queryString);
+        // return table records
+        const table = await ws_loadCategory(connection);
+        return table;
+    } catch (err) {
+        console.error("ws_updateCategory SQL error: ", err);
+        return {
+            status: "Failed",
+            method: "ws_updateCategory",
+            msg: err
+        }
+    }
+}
 
 module.exports = {
     ws_loadCategory,
     ws_createCategory,
+    ws_updateCategory,
 }
