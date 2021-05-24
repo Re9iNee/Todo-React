@@ -1,6 +1,7 @@
 const {
     ws_loadCategory,
-    ws_createCategory
+    ws_createCategory,
+    ws_updateCategory
 } = require("../services/category");
 const {
     poolConnect,
@@ -37,6 +38,21 @@ exports.makeCategory = async (req, res) => {
         pool,
         poolConnect
     }, req.body);
+    res.send({
+        result
+    });
+}
+
+
+exports.updateCategory = async (req, res) => {
+    // T02 - Method 03
+    // Attach categoryId and newValues to request body.
+    // parameters: sql connection, categoryId, newValues
+    // output: categoryTable
+    const result = await ws_updateCategory({
+        pool,
+        poolConnect
+    }, req.body.categoryId, req.body.newValues);
     res.send({
         result
     });
