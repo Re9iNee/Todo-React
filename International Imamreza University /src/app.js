@@ -4,23 +4,17 @@ const bodyPaser = require('body-parser');
 const path = require('path');
 
 const categoryRoutes = require("./router/category");
+const taskRoutes = require("./router/task");
 
 
 // NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
 
 
-
-// TODO: Categories
 // TODO: display all categories at the sidebar
-// ANCHOR: PURGE all deleted categories? - or purge them one by one.
 
 
-// TODO: Tasks
-// TODO: Create -> insert a task into an specific Category.JSON file
-// TODO: Read -> load all task from an specific Category.JSON file
-// TODO: Update -> 1. renaming  / 2. add2Fav / 3. markAsDone
-// TODO: DELETE -> remove a task from specific Category.JSON file 
 
+// FIXME: if you (soft)delete a row, you will have a problem with their unique columns for later insertions
 
 
 // config
@@ -59,6 +53,9 @@ app.use(express.json({
 
 app.use(categoryRoutes);
 
+/*  TASK 3 */
+
+app.use(taskRoutes);
 
 
 

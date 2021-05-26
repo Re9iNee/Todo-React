@@ -1,14 +1,14 @@
 const {
     normalizeQueryString,
-    NotNullColumnsFilled,
-    checkDuplicate,
     normalizeQueryString_Create,
-    sqlDate,
-    endIsLenghty,
+    checkDuplicate,
+    NotNullColumnsFilled,
     getDate,
     getTime,
     setToQueryString,
     loadDate,
+    sqlDate,
+    endIsLenghty,
 } = require("../utils/commonModules");
 
 require("dotenv").config({
@@ -19,25 +19,41 @@ const {
     DB_DATABASE
 } = process.env;
 
-const ws_loadCategory = async (connection, filters = new Object(null), customQuery = null, resultLimit = 1000) => {
+const ws_loadTask = async (connection, filters = new Object(null), customQuery = null, resultLimit = 1000) => {
     let queryString = `SELECT TOP (${resultLimit}) 
-    [categoryId]
-    ,[title]
-    ,[dateCreated]
-    ,[dateModified]
-    ,[timeCreated]
-    ,[timeModified]
-    ,[favourite]
-    ,[checked]
-    ,[description]
-    FROM [${DB_DATABASE}].[dbo].[tblCategory]
-    WHERE deleted = 0 `;
+        [taskId]
+        ,task.[title]
+        ,task.[checked]
+        ,task.[favourite]
+        ,task.[dateCreated]
+        ,task.[dateModified]
+        ,task.[timeCreated]
+        ,task.[timeModified]
+        ,task.[categoryId]
+    FROM [${DB_DATABASE}].[dbo].[tblTask] as task
+    INNER JOIN [${DB_DATABASE}].[dbo].[tblCategory] as category
+    on category.categoryId = task.categoryId
+    WHERE 
+    task.deleted = 0
+    AND 
+    category.deleted = 0 `;
+
+    // NOTE: Ambiguous column names
+    const regexr = /^category\./;
+    for (let column in filters) {
+        if (!column.match(regexr)) {
+            filters[`task.${column}`] = filters[column];
+            delete filters[column];
+        }
+    }
+
     const {
         pool,
         poolConnect
     } = connection;
     // ensures that the pool has been created
     await poolConnect;
+
     queryString = normalizeQueryString(queryString, filters);
     if (customQuery)
         queryString += ` ${customQuery}`;
@@ -47,7 +63,7 @@ const ws_loadCategory = async (connection, filters = new Object(null), customQue
         const result = await request.query(queryString);
         return result;
     } catch (err) {
-        console.error("ws_loadCategory, SQL error: ", err);
+        console.error("ws_loadTask, SQL error: ", err);
         return {
             status: "Failed",
             method: "ws_loadCategory",
@@ -56,16 +72,17 @@ const ws_loadCategory = async (connection, filters = new Object(null), customQue
     }
 }
 
-
-const ws_createCategory = async (connection, details = new Object(null)) => {
+const ws_createTask = async (connection, details = new Object(null)) => {
     // details are the parameters sent for creating table
     const {
-        title
+        title,
+        categoryId
     } = details;
 
     // Not Null Values
-    // NOTE: "title", "dateCreated", "timeCreated", "favourite", "checked", "deleted"
+    // NOTE: "title", "checked", "favourite", "deleted", "dateCreated", "timeCreated", "categoryId"
     let notNullColumns = ["title"];
+    // NOTE: others have default Values
     if (!NotNullColumnsFilled(details, ...notNullColumns))
         return {
             status: "Failed",
@@ -75,23 +92,23 @@ const ws_createCategory = async (connection, details = new Object(null)) => {
         }
 
     // check for duplicates (unique Columns)
-    // NOTE: "title"
-    const duplicateUniqueTitle = await checkDuplicate(connection, {
-        title
-    }, ws_loadCategory);
-    if (duplicateUniqueTitle)
+    // NOTE: "title" + categoryId
+    const duplicateUniques = await checkDuplicate(connection, {
+        title,
+        categoryId: categoryId ? categoryId : 1
+    }, ws_loadTask);
+    if (duplicateUniques)
         return {
             status: "Failed",
-            msg: "Error Creating Row, Violation of unique values",
-            uniqueColumn: "title",
+            msg: "Error Creating Row, Violation of unqiue values",
+            uniqueColumn: "title + categoryId",
             details
         }
-
-
     // NOTE: Auto Generate Date And Time
     const d = new Date();
     details.dateCreated = getDate(d);
     details.timeCreated = getTime(d);
+
 
     const {
         pool,
@@ -101,56 +118,59 @@ const ws_createCategory = async (connection, details = new Object(null)) => {
     await poolConnect;
 
     let queryString = `INSERT INTO 
-    [${DB_DATABASE}].[dbo].[tblCategory] 
-    ($COLUMN)
+    [${DB_DATABASE}].[dbo].[tblTask] 
+    ($COLUMN) 
     VALUES ($VALUE);
-    SELECT SCOPE_IDENTITY() AS categoryId;`;
+    SELECT SCOPE_IDENTITY() AS taskId;`;
+
     // normalizeQS_Create => (queryString, {title: "sth"}, ...configs)
     queryString = normalizeQueryString_Create(queryString, details);
     try {
         const request = pool.request();
         const result = await request.query(queryString);
-        const id = result.recordset[0].categoryId;
+        const id = result.recordset[0].taskId;
         return id;
     } catch (err) {
-        console.error("ws_createCategory SQL error: ", err);
+        console.error("ws_createTask SQL error: ", err);
         return {
             status: "Failed",
-            method: "ws_createCategory",
-            mgs: err
+            method: "ws_createTask",
+            msg: err
         }
     }
 }
 
-
-
-const ws_updateCategory = async (connection, categoryId, newValues = new Object(null)) => {
+const ws_updateTask = async (connection, taskId, newValues = new Object(null)) => {
     // inputs and params
-    // NOTE: title, dateModified, timeModified, favourite, checked, description
+    // NOTE: title, dateModified, timeModified, favourite, checked, categoryId
     if (!Object.entries(newValues).length)
         return {
             status: "Failed",
             msg: "Send newValues to change table records",
             newValues
         }
-    if (!categoryId)
+    if (!taskId)
         return {
             status: "Failed",
-            msg: "Fill categoryId inside request JSON body",
-            categoryId
+            msg: "Insert taskId inside request JSON body",
+            taskId
         }
-    const filteredRow = await ws_loadCategory(connection, {
-        categoryId
-    }, null, 1);
 
+    const filteredRow = await ws_loadTask(connection, {
+        taskId
+    }, null, 1);
+    //TODO: change categoryId on this record [feature]
     if ("title" in newValues) {
         const {
             title
         } = newValues;
-        const duplicateUniqueTitle = await checkDuplicate(connection, {
-            title
-        }, ws_loadCategory);
-        if (duplicateUniqueTitle)
+        const categoryId = filteredRow.recordset[0].categoryId;
+        // NOTE: Unique Columns: "title" + categoryId
+        const duplicateUniques = await checkDuplicate(connection, {
+            title,
+            categoryId
+        }, ws_loadTask);
+        if (duplicateUniques)
             return {
                 status: "Failed",
                 msg: "Error Creating Row, Violation of unique values",
@@ -159,16 +179,16 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
             }
     }
 
-    //  check for custome Validation
+    // check for custome Validation
     // NOTE: dateModified should be bigger than dateCreated
     if ("dateModified" in newValues) {
         const {
             dateModified
         } = newValues;
-        // loadDate:  Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time) => 2021-09-23
-        const dateCreated = loadDate(filteredRow.recordset[0].dateCreated.toString())
-        let start = new sqlDate(dateCreated.split('-'));
-        let end = new sqlDate(dateModified.split('-'));
+        // loadDate: Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time) => 2021-09-23
+        const dateCreated = loadDate(filteredRow.recordset[0].dateCreated.toString());
+        const start = new sqlDate(dateCreated.split('-'));
+        const end = new sqlDate(dateModified.split('-'));
         if (!endIsLenghty(start, end))
             return {
                 status: "Failed",
@@ -178,15 +198,13 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
             }
     }
 
-
-    let queryString = `UPDATE 
-    [${DB_DATABASE}].[dbo].[tblCategory] SET `;
-    // setToQueryString returns: UPDATE ... SET sth = 2 , test = 3
+    let queryString = `UPDATE
+    [${DB_DATABASE}].[dbo].[tblTask] SET `;
+    // setToQueryString returns: UPDATE ... SET sth = 2, test = 'OK'
     queryString = setToQueryString(queryString, newValues) + " WHERE 1 = 1 ";
     queryString = normalizeQueryString(queryString, {
-        categoryId
+        taskId
     });
-
     const {
         pool,
         poolConnect
@@ -198,10 +216,10 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
         const request = pool.request();
         const updateResult = await request.query(queryString);
         // return table records
-        const table = await ws_loadCategory(connection);
+        const table = await ws_loadTask(connection);
         return table;
     } catch (err) {
-        console.error("ws_updateCategory SQL error: ", err);
+        console.error("ws_updateTask SQL error: ", err);
         return {
             status: "Failed",
             method: "ws_updateCategory",
@@ -210,26 +228,25 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
     }
 }
 
-const ws_deleteCategory = async (connection, categoryId) => {
-    // NOTE: we (soft)delete a row by updating its deleted column to -> true
-    const filteredRow = await ws_loadCategory(connection, {categoryId}, null, 1);
-    if (!filteredRow.recordset.length) 
+const ws_deleteTask = async (connection, taskId) => {
+    // NOTE: we (soft)delete a row by updating its "deleted" column to -> true
+    const filteredRow = await ws_loadTask(connection, {taskId}, null, 1);
+    if (!filteredRow.recordset.length)
         return {
             status: "Failed",
-            msg: "Enter a valid categoryId",
-            categoryId
+            msg: "Enter a valid taskId",
+            taskId
         }
-    return await ws_updateCategory(connection, categoryId, {
+    return await ws_updateTask(connection, taskId, {
         deleted: 1
     });
 }
 
-// TODO: PURGE all deleted categories? - or purge them one by one.
 
-
+// TODO: PURGE all deleted tasks - or purge them one by one.
 module.exports = {
-    ws_loadCategory,
-    ws_createCategory,
-    ws_updateCategory,
-    ws_deleteCategory
+    ws_loadTask,
+    ws_createTask,
+    ws_updateTask,
+    ws_deleteTask
 }
