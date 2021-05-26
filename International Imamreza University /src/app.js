@@ -14,11 +14,7 @@ const taskRoutes = require("./router/task");
 
 
 
-// TODO: Tasks
-// TODO: Create -> insert a task into an specific Category.JSON file
-// TODO: Update -> 1. renaming  / 2. add2Fav / 3. markAsDone
-// TODO: DELETE -> remove a task from specific Category.JSON file 
-
+// FIXME: if you (soft)delete a row, you will have a problem with their unique columns for later insertions
 
 
 // config

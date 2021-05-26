@@ -224,7 +224,7 @@ const ws_deleteCategory = async (connection, categoryId) => {
     });
 }
 
-// ANCHOR: PURGE all deleted categories? - or purge them one by one.
+// TODO: PURGE all deleted categories? - or purge them one by one.
 
 
 module.exports = {
