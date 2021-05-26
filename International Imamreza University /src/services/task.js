@@ -30,7 +30,7 @@ const ws_loadTask = async (connection, filters = new Object(null), customQuery =
     category.deleted = 0 `;
 
     // NOTE: Ambiguous column names
-    const regexr = /^category./;
+    const regexr = /^category\./;
     for (let column in filters) {
         if (!column.match(regexr)) {
             filters[`task.${column}`] = filters[column];
