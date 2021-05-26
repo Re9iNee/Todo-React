@@ -64,7 +64,7 @@ const ws_createCategory = async (connection, details = new Object(null)) => {
     } = details;
 
     // Not Null Values
-    // NOTE: "title", "dateCreated", "timeCreated", "favourite", "checked"
+    // NOTE: "title", "dateCreated", "timeCreated", "favourite", "checked", "deleted"
     let notNullColumns = ["title"];
     if (!NotNullColumnsFilled(details, ...notNullColumns))
         return {
