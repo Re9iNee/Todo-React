@@ -5,6 +5,10 @@ const {
     NotNullColumnsFilled,
     getDate,
     getTime,
+    setToQueryString,
+    loadDate,
+    sqlDate,
+    endIsLenghty,
 } = require("../utils/commonModules");
 
 require("dotenv").config({
@@ -136,7 +140,96 @@ const ws_createTask = async (connection, details = new Object(null)) => {
     }
 }
 
+const ws_updateTask = async (connection, taskId, newValues = new Object(null)) => {
+    // inputs and params
+    // NOTE: title, dateModified, timeModified, favourite, checked, categoryId
+    if (!Object.entries(newValues).length)
+        return {
+            status: "Failed",
+            msg: "Send newValues to change table records",
+            newValues
+        }
+    if (!taskId)
+        return {
+            status: "Failed",
+            msg: "Insert taskId inside request JSON body",
+            taskId
+        }
+
+    const filteredRow = await ws_loadTask(connection, {
+        taskId
+    }, null, 1);
+
+    if ("title" in newValues) {
+        const {
+            title
+        } = newValues;
+        const categoryId = filteredRow.recordset[0].categoryId;
+        // NOTE: Unique Columns: "title" + categoryId
+        const duplicateUniques = await checkDuplicate(connection, {
+            title,
+            categoryId
+        }, ws_loadTask);
+        if (duplicateUniques)
+            return {
+                status: "Failed",
+                msg: "Error Creating Row, Violation of unique values",
+                uniqueColumn: "title",
+                newValues
+            }
+    }
+
+    // check for custome Validation
+    // NOTE: dateModified should be bigger than dateCreated
+    if ("dateModified" in newValues) {
+        const {
+            dateModified
+        } = newValues;
+        // loadDate: Wed Jan 01 2020 03:30:00 GMT+0330 (Iran Standard Time) => 2021-09-23
+        const dateCreated = loadDate(filteredRow.recordset[0].dateCreated.toString());
+        const start = new sqlDate(dateCreated.split('-'));
+        const end = new sqlDate(dateModified.split('-'));
+        if (!endIsLenghty(start, end))
+            return {
+                status: "Failed",
+                msg: "dateModified should be bigger than createdDate",
+                dateCreated,
+                dateModified
+            }
+    }
+
+    let queryString = `UPDATE
+    [${DB_DATABASE}].[dbo].[tblTask] SET `;
+    // setToQueryString returns: UPDATE ... SET sth = 2, test = 'OK'
+    queryString = setToQueryString(queryString, newValues) + " WHERE 1 = 1 ";
+    queryString = normalizeQueryString(queryString, {
+        taskId
+    });
+    const {
+        pool,
+        poolConnect
+    } = connection;
+    // ensures that the pool has been created
+    await poolConnect;
+
+    try {
+        const request = pool.request();
+        const updateResult = await request.query(queryString);
+        // return table records
+        const table = await ws_loadTask(connection);
+        return table;
+    } catch (err) {
+        console.error("ws_updateTask SQL error: ", err);
+        return {
+            status: "Failed",
+            method: "ws_updateCategory",
+            msg: err
+        }
+    }
+}
+
 module.exports = {
     ws_loadTask,
-    ws_createTask
+    ws_createTask,
+    ws_updateTask,
 }
