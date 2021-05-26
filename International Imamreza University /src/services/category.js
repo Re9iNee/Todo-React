@@ -127,7 +127,7 @@ const ws_createCategory = async (connection, details = new Object(null)) => {
 const ws_updateCategory = async (connection, categoryId, newValues = new Object(null)) => {
     // inputs and params
     // NOTE: title, dateModified, timeModified, favourite, checked, description
-    if (!newValues)
+    if (!Object.entries(newValues).length)
         return {
             status: "Failed",
             msg: "Send newValues to change table records",
