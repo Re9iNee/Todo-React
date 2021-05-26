@@ -1,5 +1,5 @@
 const {
-    ws_loadTask, ws_createTask
+    ws_loadTask, ws_createTask, ws_updateTask
 } = require("../services/task");
 const {
     poolConnect,
@@ -26,6 +26,20 @@ exports.makeTask = async (req, res) => {
         pool,
         poolConnect
     }, req.body);
+    res.send({
+        result
+    })
+}
+
+exports.updateTask = async (req, res) => {
+    // T03 - Method 03 
+    // Attach taskId and newValues Object to request body.
+    // parameters: sql connection, taskId, newValues
+    // output: taskTable
+    const result = await ws_updateTask({
+        pool,
+        poolConnect
+    }, req.body.taskId, req.body.newValues);
     res.send({
         result
     })

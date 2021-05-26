@@ -159,7 +159,7 @@ const ws_updateTask = async (connection, taskId, newValues = new Object(null)) =
     const filteredRow = await ws_loadTask(connection, {
         taskId
     }, null, 1);
-
+    //TODO: change categoryId on this record [feature]
     if ("title" in newValues) {
         const {
             title
