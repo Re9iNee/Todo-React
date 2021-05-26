@@ -4,18 +4,17 @@ const bodyPaser = require('body-parser');
 const path = require('path');
 
 const categoryRoutes = require("./router/category");
+const taskRoutes = require("./router/task");
 
 
 // NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
 
 
-
-// TODO: Categories
 // TODO: display all categories at the sidebar
 
 
+
 // TODO: Tasks
-// TODO: Read -> load all task from an specific Category.JSON file
 // TODO: Create -> insert a task into an specific Category.JSON file
 // TODO: Update -> 1. renaming  / 2. add2Fav / 3. markAsDone
 // TODO: DELETE -> remove a task from specific Category.JSON file 
@@ -58,6 +57,9 @@ app.use(express.json({
 
 app.use(categoryRoutes);
 
+/*  TASK 3 */
+
+app.use(taskRoutes);
 
 
 
