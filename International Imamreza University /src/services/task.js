@@ -228,8 +228,25 @@ const ws_updateTask = async (connection, taskId, newValues = new Object(null)) =
     }
 }
 
+const ws_deleteTask = async (connection, taskId) => {
+    // NOTE: we (soft)delete a row by updating its "deleted" column to -> true
+    const filteredRow = await ws_loadTask(connection, {taskId}, null, 1);
+    if (!filteredRow.recordset.length)
+        return {
+            status: "Failed",
+            msg: "Enter a valid taskId",
+            taskId
+        }
+    return await ws_updateTask(connection, taskId, {
+        deleted: 1
+    });
+}
+
+
+// TODO: PURGE all deleted tasks - or purge them one by one.
 module.exports = {
     ws_loadTask,
     ws_createTask,
     ws_updateTask,
+    ws_deleteTask
 }

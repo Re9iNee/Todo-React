@@ -1,5 +1,5 @@
 const {
-    ws_loadTask, ws_createTask, ws_updateTask
+    ws_loadTask, ws_createTask, ws_updateTask, ws_deleteTask
 } = require("../services/task");
 const {
     poolConnect,
@@ -43,4 +43,16 @@ exports.updateTask = async (req, res) => {
     res.send({
         result
     })
+}
+
+exports.deleteTask = async (req, res) => {
+    // T03 - Method 04
+    // parameters: sql connnection, taskId
+    const result = await ws_deleteTask({
+        pool,
+        poolConnect
+    }, req.body.taskId);
+    res.send({
+        result
+    });
 }
