@@ -21,12 +21,43 @@
         TODO: connect categories
             TODO: get all catxegories and show them in sidebar (Load)
             TODO: adding category (Create)
-            TODO: on rename update task (Update)
+            ANCHOR: [Feature] on rename update task (Update)
             ANCHOR: [Feature] on checked/favourite category (Update)
             TODO: on delete (Delete)
+
+    TODO: make sidebar UI
+        TODO: header
+        TODO: category list
+        TODO: Adding Form
+            TODO: add button
+            TODO: input bark
 -->
-<body ng-app="myApp" ng-controller="myCtrl">
-    <section class="container">
+<body ng-app="myApp">
+    <sidebar ng-controller="categoryCtrlr">
+        <header>
+            <h1>Lists</h1>
+        </header>
+
+        <main class="tasks">
+            <section class="task animate-repeat"
+                ng-repeat="task in taskLists | orderBy: 'checked' : true | filter: searchTerm">
+                <section class="center">
+                    <section class="iconTouchTarget" ng-click="task.checked = !(task.checked); save()">
+                        <input type="checkbox" id="" ng-model="task.checked" ng-change="save()" ng-click="stopPropagation($event)">
+                    </section>
+                    <label style="text-decoration: {{ task.checked ? 'line-through;' : 'none'}}"
+                        ng-click="changeTaskName(task.title, task.$$hashKey); changeAppState(1);">{{ task.title }}</label>
+                </section>
+                <section class="iconTouchTarget" ng-click="deleteTask(task.$$hashKey)">
+                    <svg width="19" height="22" xmlns="http://www.w3.org/2000/svg">
+                        <path id="deleteSvg"
+                            d="M18.321 1.36h-5.089l-.399-.795A1.018 1.018 0 0011.922 0H7.074a1.006 1.006 0 00-.907.565l-.4.795H.68A.68.68 0 000 2.04v1.359c0 .375.304.68.679.68H18.32a.68.68 0 00.679-.68v-1.36a.68.68 0 00-.679-.68zM2.256 19.84a2.037 2.037 0 002.032 1.912h10.424a2.037 2.037 0 002.032-1.911l.899-14.403H1.357l.9 14.403z"
+                            fill="#888" fill-rule="nonzero" /></svg>
+                </section>
+            </section>
+        </main>
+
+    </sidebar>
     <section class="container" ng-controller="taskCtrlr">
         <header>Today</header>
         <main class="tasks">
