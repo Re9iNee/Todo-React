@@ -1,7 +1,7 @@
 let app = angular.module('myApp', ['ngAnimate'])
-app.controller('myCtrl', ($scope, $interval) => {
+app.controller('taskCtrlr', ($scope, $interval) => {
     // Init:
-    let dbName = 'list5'
+    const dbName = 'list5';
     $scope.searchMode = false;
     $scope.appState = 0;
     $scope.tempHash = null;
