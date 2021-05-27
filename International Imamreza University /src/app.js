@@ -10,9 +10,6 @@ const taskRoutes = require("./router/task");
 // NOTE: headers: GET POST PUT PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
 
 
-// TODO: display all categories at the sidebar
-
-
 
 // FIXME: if you (soft)delete a row, you will have a problem with their unique columns for later insertions
 
