@@ -16,6 +16,25 @@ const read = async (address, table, query) => {
     }
 }
 
+const create = async (address, table, data) => {
+    try {
+        debugger
+        let url = address + "/" + table;
+        const config = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            body: JSON.stringify(data)
+        }
+        const resp = await fetch(url, config);
+        const json = await resp.json();
+        debugger
+        return json.result;
+    } catch (err) {
+        console.error("Error While Sending data, error: ", err);
+    }
+}
 
 (async() => {
     // LOAD
@@ -24,4 +43,7 @@ const read = async (address, table, query) => {
     console.log(categories)
     const tasks = await read(URL, "task");
     console.log(tasks);
+    // WRITE
+    const categoryResult = await create(URL, "category", {title: "1300 Resoloutions"});
+    console.log(categoryResult)
 })();
