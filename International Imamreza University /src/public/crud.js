@@ -17,11 +17,12 @@ const read = async (address, table, query) => {
 }
 
 const create = async (address, table, data) => {
+const update = async (address, table, filter, newValues) => {
     try {
-        debugger
         let url = address + "/" + table;
+        const data = {...filter, newValues};
         const config = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json;charset=UTF-8"
             },
@@ -29,10 +30,9 @@ const create = async (address, table, data) => {
         }
         const resp = await fetch(url, config);
         const json = await resp.json();
-        debugger
         return json.result;
-    } catch (err) {
-        console.error("Error While Sending data, error: ", err);
+    } catch(err) {
+        console.error("Error While Updating data, error: ", err);
     }
 }
 
