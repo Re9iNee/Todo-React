@@ -13,6 +13,7 @@ const taskRoutes = require("./router/task");
 
 // FIXME: if you (soft)delete a row, you will have a problem with their unique columns for later insertions
 
+// TODO: setup cors
 
 // config
 
