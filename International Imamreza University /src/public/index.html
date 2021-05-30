@@ -41,8 +41,8 @@
         <main class="tasks">
             <section class="task animate-repeat" ng-repeat="category in categories">
                 <section class="center">
-                    <section class="iconTouchTarget" ng-click="task.checked = !(task.checked); save()">
-                        <input type="checkbox" id="" ng-model="task.checked" ng-change="save()" ng-click="stopPropagation($event)">
+                    <section class="iconTouchTarget" ng-click="update(category.categoryId, category.checked)">
+                        <input type="checkbox" id="" ng-model="category.checked">
                     </section>
                     <label ng-click="">{{ category.title }}</label>
                 </section>
