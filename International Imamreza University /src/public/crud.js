@@ -1,8 +1,6 @@
 const URL = 'http://localhost:8080';
 class CRUD {
     // this class is common methods to interact with database.
-    // NOTE: only Create & Read exists.
-    // TODO: new CRUD(address);
     constructor(address, table) {
         this.address = address;
         this.table = table;
@@ -77,7 +75,7 @@ class CRUD {
             }
             const resp = await fetch(url, config);
             const json = await resp.json();
-            return json.result;
+            return json.result.recordset;
         } catch (err) {
             console.error("Error While Deleting data, error: ", err);
         }

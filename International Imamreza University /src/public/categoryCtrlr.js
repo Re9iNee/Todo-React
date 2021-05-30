@@ -11,6 +11,14 @@ app.controller('categoryCtrlr', async ($scope) => {
     // telling anuglarJS to refresh
     $scope.$apply();
 
-    
+    // Delete
+    $scope.delete = async (index ,id) => {
+        // first delete it from local array (front)
+        $scope.categories.splice(index, 1);
+        // then deleting from database
+        const deleteResult = await categoryDB.delete({
+            categoryId: id
+        });
+    }
 
 });

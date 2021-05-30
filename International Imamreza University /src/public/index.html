@@ -46,7 +46,7 @@
                     </section>
                     <label ng-click="">{{ category.title }}</label>
                 </section>
-                <section class="iconTouchTarget" ng-click="deleteTask(task.$$hashKey)">
+                <section class="iconTouchTarget" ng-click="delete($index ,category.categoryId);">
                     <svg width="19" height="22" xmlns="http://www.w3.org/2000/svg">
                         <path id="deleteSvg"
                             d="M18.321 1.36h-5.089l-.399-.795A1.018 1.018 0 0011.922 0H7.074a1.006 1.006 0 00-.907.565l-.4.795H.68A.68.68 0 000 2.04v1.359c0 .375.304.68.679.68H18.32a.68.68 0 00.679-.68v-1.36a.68.68 0 00-.679-.68zM2.256 19.84a2.037 2.037 0 002.032 1.912h10.424a2.037 2.037 0 002.032-1.911l.899-14.403H1.357l.9 14.403z"
