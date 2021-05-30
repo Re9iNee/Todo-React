@@ -39,14 +39,12 @@
         </header>
 
         <main class="tasks">
-            <section class="task animate-repeat"
-                ng-repeat="task in taskLists | orderBy: 'checked' : true | filter: searchTerm">
+            <section class="task animate-repeat" ng-repeat="category in categories">
                 <section class="center">
                     <section class="iconTouchTarget" ng-click="task.checked = !(task.checked); save()">
                         <input type="checkbox" id="" ng-model="task.checked" ng-change="save()" ng-click="stopPropagation($event)">
                     </section>
-                    <label style="text-decoration: {{ task.checked ? 'line-through;' : 'none'}}"
-                        ng-click="changeTaskName(task.title, task.$$hashKey); changeAppState(1);">{{ task.title }}</label>
+                    <label ng-click="">{{ category.title }}</label>
                 </section>
                 <section class="iconTouchTarget" ng-click="deleteTask(task.$$hashKey)">
                     <svg width="19" height="22" xmlns="http://www.w3.org/2000/svg">
