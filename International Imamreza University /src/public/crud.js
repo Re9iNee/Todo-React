@@ -7,10 +7,10 @@ class CRUD {
     }
     read = async (query) => {
         try {
-            let url = this.address + "/" + this.table;
+            let url = this.address + "/" + this.table + "/?";
             if (query)
-                url += "/" + query
-
+                for (const property in query)
+                    url += `${property}=${query[property]}&`
             const config = {
                 method: "GET"
             }
@@ -87,7 +87,9 @@ class CRUD {
 (async () => {
     // NOTE: usuage of this class
     let category = new CRUD(URL, "category");
-    console.log(await category.read());
-    let task = new CRUD(URL, "task");
-    console.log(await task.read());
+    const result = await category.read({
+        title: "Today",
+        categoryId: 1,
+    });
+    console.log(result)
 })();
