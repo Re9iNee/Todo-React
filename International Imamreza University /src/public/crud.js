@@ -86,10 +86,10 @@ class CRUD {
 
 (async () => {
     // NOTE: usuage of this class
-    let category = new CRUD(URL, "category");
-    const result = await category.read({
-        title: "Today",
-        categoryId: 1,
-    });
-    console.log(result)
+    // let category = new CRUD(URL, "category");
+    // const result = await category.read({
+    //     title: "Today",
+    //     categoryId: 1,
+    // });
+    // console.log(result)
 })();

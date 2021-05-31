@@ -19,12 +19,9 @@
             TODO: on checked/favourite/rename update task (Update)
             TODO: on delete (Delete)
         TODO: connect categories
-            TODO: get all categories and show them in sidebar (Load)
-            TODO: adding category (Create)
             ANCHOR: [Feature] on rename update task (Update)
-            ANCHOR: [Feature] on checked/favourite category (Update)
-            TODO: on delete (Delete)
-
+            ANCHOR: [Feature] on favourite category (Update)
+            
     TODO: make sidebar UI
         TODO: header
         TODO: category list
@@ -37,7 +34,7 @@
 <body ng-app="myApp">
     <sidebar ng-controller="categoryCtrlr">
         <header>
-            <h1>Lists</h1>
+            <h1> {{ sideBarHeader }} </h1>
         </header>
 
         <main class="tasks">
@@ -46,7 +43,7 @@
                     <section class="iconTouchTarget" ng-click="update(category.categoryId, category.checked)">
                         <input type="checkbox" id="" ng-model="category.checked">
                     </section>
-                    <label ng-click="">{{ category.title }}</label>
+                    <label ng-click="navigateTo(category)">{{ category.title }}</label>
                 </section>
                 <section class="iconTouchTarget" ng-click="delete($index ,category.categoryId);">
                     <svg width="19" height="22" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +81,8 @@
                 ng-repeat="task in taskLists | orderBy: 'checked' : true | filter: searchTerm">
                 <section class="center">
                     <section class="iconTouchTarget" ng-click="task.checked = !(task.checked); save()">
-                        <input type="checkbox" id="" ng-model="task.checked" ng-change="save()" ng-click="stopPropagation($event)">
+                        <input type="checkbox" id="" ng-model="task.checked" ng-change="save()"
+                            ng-click="stopPropagation($event)">
                     </section>
                     <label style="text-decoration: {{ task.checked ? 'line-through;' : 'none'}}"
                         ng-click="changeTaskName(task.title, task.$$hashKey); changeAppState(1);">{{ task.title }}</label>
@@ -100,7 +98,8 @@
         <form ng-model="myForm" class="input" ng-submit="submitForm(taskName)">
             <input type="text" name="" ng-change="onInputChange(taskName)" ng-model="taskName" id="my-input"
                 placeholder="{{ inputPlaceHolder }}" autofocus>
-            <section class="iconTouchTarget" ng-click="svgSwitch(); clearSearchTerm(); focusOnInput()" title="{{ svgTitle }}">
+            <section class="iconTouchTarget" ng-click="svgSwitch(); clearSearchTerm(); focusOnInput()"
+                title="{{ svgTitle }}">
                 <svg class="animate-switch" ng-show="appState == 0" width="24" height="24">
                     <g transform="translate(-278 -11)" fill="none" fill-rule="evenodd">
                         <path id="searchSvg"
@@ -115,7 +114,7 @@
                         fill="#888" fill-rule="nonzero" />
                 </svg>
                 <svg class="animate-switch" width="24" height="24" ng-show="appState == 1">
-                    <g   id="searchSvg" fill="#888" fill-rule="nonzero">
+                    <g id="searchSvg" fill="#888" fill-rule="nonzero">
                         <path
                             d="M2.087 1.422a1.655 1.655 0 012.34.03L22.34 19.818a1.655 1.655 0 11-2.37 2.311L2.057 3.762a1.655 1.655 0 01.03-2.34z" />
                         <path
@@ -129,6 +128,6 @@
 </body>
 
 </html>
+<script src="crud.js"></script>
 <script src="app.js"></script>
 <script src="categoryCtrlr.js"></script>
-<script src="crud.js"></script>
