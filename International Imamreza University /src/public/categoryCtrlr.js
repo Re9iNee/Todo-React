@@ -30,6 +30,25 @@ app.controller('categoryCtrlr', async ($scope) => {
         });
     }
 
+    $scope.submit = async ($event) => {
+        const title = $scope.categoryForm.newCatTitle.$$rawModelValue;
+        // TODO: VALIDATION
+        // NOTE: creating a row in databse
+        const create = async (title) => {
+            const result = await categoryDB.create({
+                title
+            });
+            return result;
+        };
+        const id = await create(title);
+        const insertedRow = await categoryDB.read({categoryId: id});
+        // // NOTE: Add to angualarJS array of object
+        // // NOTE: if we want to relaod the page it would load all categories again
+        $scope.categories.push(...insertedRow);
+        $scope.$apply();
+        // TODO: clear input bar text
+    }
+
 
     // STUB: DEBUGGING SECTION
     $scope.debug = (param) => {
