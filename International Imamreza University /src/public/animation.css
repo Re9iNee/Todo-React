@@ -1,0 +1,46 @@
+.animate-switch.ng-hide {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+}
+
+.animate-switch.ng-hide-add,
+.animate-switch.ng-hide-remove {
+    transition: all ease-out 0.3s;
+}
+
+.animate-switch {
+    position: absolute;
+}
+
+
+
+/* Animate Repeat */
+/* Targets when u delete an item */
+.animate-repeat.ng-leave {
+    transition: all ease-in .5s;
+}
+
+
+.animate-repeat.ng-leave {
+    opacity: 1;
+    transform: translate3d(0);
+}
+
+.animate-repeat.ng-leave.ng-leave-active {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+}
+
+/* Targets when u add items */
+.animate-repeat.ng-enter {
+    transition: all cubic-bezier(.44, 1.49, .47, 1.06) .5s;
+}
+
+
+.animate-repeat.ng-enter {
+    transform: translateX(100%);
+}
+
+.animate-repeat.ng-enter.ng-enter-active {
+    transform: translateX(0);
+}

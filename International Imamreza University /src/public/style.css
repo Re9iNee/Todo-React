@@ -1,0 +1,262 @@
+/* Init */
+body {
+    margin: 0 auto;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100vw;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+/* Debug Purpose: */
+/* body {
+    border: 1px solid green;
+}
+
+.container {
+    border: 1px solid red;
+}
+
+.container * {
+    border: .5px dotted blue;
+}
+
+.head {
+    border: 1px solid pink;
+}
+
+.tasks {
+    border: 1px solid purple;
+} */
+
+/* Display: */
+body {
+    display: flex;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    text-align: center;
+}
+
+
+.tasks {
+    display: flex;
+    flex-direction: row;
+    align-content: start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.tasks>* {
+    width: 100%;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+}
+
+.input {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input input {
+    flex-grow: 1;
+    max-width: 88%;
+}
+
+.iconTouchTarget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Margins & Paddings: */
+header {
+    padding: 2.6rem;
+}
+
+.task {
+    /* padding: 1.5rem .2rem; */
+    padding: .3rem .2rem;
+    margin: .2rem 0.1rem;
+}
+
+.input {
+    padding: 1.5rem;
+}
+
+.input input {
+    padding: .4rem 0.8rem;
+}
+
+label {
+    margin-left: .1rem;
+}
+
+.tasks {
+    margin: .3rem 0;
+    padding: 1rem;
+}
+
+
+
+/* Typography */
+@font-face {
+    font-family: "AvenirBold";
+    src: url("./extras/Fonts/AvenirBook(Bold).otf");
+}
+
+header {
+    font-family: "AvenirBold";
+    font-size: 2.2rem;
+    line-height: 41px;
+    text-align: left;
+    color: rgb(178, 126, 181);
+}
+
+@font-face {
+    font-family: "AvenirSemiBold";
+    src: url("./extras/Fonts/AvenirHeavy(Semi_Bold).otf");
+}
+
+body {
+    font-family: "AvenirSemiBold";
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: .38px;
+    color: rgba(60, 60, 67, 60);
+}
+
+
+
+@font-face {
+    font-family: "AvenirLight";
+    src: url("./extras/Fonts/AvenirExtraLight.otf");
+}
+
+.input input::placeholder {
+    color: rgb(178, 126, 181);
+}
+
+.input input {
+    color: rgb(224, 224, 224);
+    font-family: "AvenirLight";
+    font-size: 17px;
+    text-align: left;
+    letter-spacing: -0.41px;
+    line-height: 22px;
+}
+
+.tasks {
+    color: rgb(224, 224, 224);
+}
+
+/* Details: */
+.container {
+    background-color: rgb(30, 30, 30);
+}
+
+.input input:focus,
+.input input:active {
+    outline: none;
+    border: 1px solid #e1e1e1;
+}
+
+.input input:hover {
+    background-color: rgb(69, 69, 69);
+}
+
+.input input {
+    border-radius: 16.5px;
+    border: none;
+    background-color: rgb(50, 50, 50);
+}
+
+.task {
+    border-radius: 12px;
+    background-color: rgb(46, 46, 46);
+}
+
+input[type='checkbox'] {
+    -webkit-appearance: none;
+    width: 21px;
+    height: 21px;
+    background: #e1e1e1;
+    border-radius: 5px;
+    border: 2px solid #D0D8E9;
+}
+
+label {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.input {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+
+input[type='checkbox']:checked {
+    background: rgb(178, 126, 181);
+}
+
+input[type='checkbox']:checked+label {
+    text-decoration: line-through;
+}
+
+.iconTouchTarget,
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+label {
+    cursor: text;
+}
+
+/* Svgs: */
+#searchSvg {
+    fill: rgb(178, 126, 181);
+}
+
+.iconTouchTarget:hover #searchSvg {
+    fill: rgb(218, 193, 219);
+}
+
+.iconTouchTarget:hover #deleteSvg {
+    fill: rgb(223, 223, 223);
+}
+
+/* Animations */
+.task:hover {
+    background: rgb(69, 69, 69);
+}
