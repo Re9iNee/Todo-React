@@ -6,30 +6,7 @@ app.controller('categoryCtrlr', async ($scope) => {
     // NOTE: DATABASE, CRUD, BackEnd Logics
     const categoryDB = new CRUD(URL, "category");
 
-    // Read
-    $scope.categories = await categoryDB.read();
-    // telling anuglarJS to refresh
-    $scope.$apply();
-
-    // Delete
-    $scope.delete = async (index, id) => {
-        // first delete it from local array (front)
-        $scope.categories.splice(index, 1);
-        // then deleting from database
-        const deleteResult = await categoryDB.delete({
-            categoryId: id
-        });
-    }
-
-    // Update
-    $scope.update = async (id, checked) => {
-        const updateResult = await categoryDB.update({
-            categoryId: id
-        }, {
-            checked
-        });
-    }
-
+    // Create
     $scope.submit = async ($event) => {
         const title = $scope.categoryForm.newCatTitle.$$rawModelValue;
         // TODO: VALIDATION
@@ -42,12 +19,37 @@ app.controller('categoryCtrlr', async ($scope) => {
         };
         const id = await create(title);
         const insertedRow = await categoryDB.read({categoryId: id});
-        // // NOTE: Add to angualarJS array of object
-        // // NOTE: if we want to relaod the page it would load all categories again
+        // NOTE: Add to angualarJS array of object
+        // NOTE: if we want to relaod the page it would load all categories again
         $scope.categories.push(...insertedRow);
         $scope.$apply();
         // TODO: clear input bar text
     }
+
+    // Read
+    $scope.categories = await categoryDB.read();
+    // telling anuglarJS to refresh
+    $scope.$apply();
+
+    // Update
+    $scope.update = async (id, checked) => {
+        const updateResult = await categoryDB.update({
+            categoryId: id
+        }, {
+            checked
+        });
+    }
+
+    // Delete
+    $scope.delete = async (index, id) => {
+        // first delete it from local array (front)
+        $scope.categories.splice(index, 1);
+        // then deleting from database
+        const deleteResult = await categoryDB.delete({
+            categoryId: id
+        });
+    }
+
 
 
     // STUB: DEBUGGING SECTION
