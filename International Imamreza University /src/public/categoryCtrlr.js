@@ -1,6 +1,11 @@
-app.controller('categoryCtrlr', async ($scope) => {
+app.controller('categoryCtrlr', async ($scope, $location) => {
     // NOTE: AngularJS, Front-end Logic
     $scope.sideBarHeader = "Lists";
+
+    // NOTE: App Navigation / Routes
+    $scope.navigateTo = (category) => {
+        $location.url(String(category.title)+"/"+String(category.categoryId));
+    }
 
 
     // NOTE: DATABASE, CRUD, BackEnd Logics
@@ -33,6 +38,7 @@ app.controller('categoryCtrlr', async ($scope) => {
 
     // Update
     $scope.update = async (id, checked) => {
+        // TODO: this only works if you wanna mark items as checked. for later features you should modify this method for more flexibility.
         const updateResult = await categoryDB.update({
             categoryId: id
         }, {
