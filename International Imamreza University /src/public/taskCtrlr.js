@@ -1,4 +1,4 @@
-app.controller('taskCtrlr', function ($scope, $location, $interval, $routeParams) {
+app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
     // Init:
     let {
         title: categoryTitle,
@@ -123,8 +123,13 @@ app.controller('taskCtrlr', function ($scope, $location, $interval, $routeParams
     $scope.save = () => {
         $scope.saveList(dbName, $scope.taskLists);
     }
-    $scope.taskLists = $scope.getSavedList(dbName);
-    $scope.addTask = (title) => {
+    // DATABASE, CRUD, BackEnd Logics
+    // Read
+    const taskDB = new CRUD(URL, "task");
+    $http.get(`${URL}/task/?categoryId=${Number(categoryId)}`).then(resp => {
+        const result = resp.data.result.recordset;
+        $scope.taskLists = result.slice();
+    })
         if (!title) return
         $scope.taskLists.push({
             title: title,
