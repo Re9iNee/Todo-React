@@ -4,7 +4,8 @@ app.controller('categoryCtrlr', async ($scope, $location) => {
 
     // NOTE: App Navigation / Routes
     $scope.navigateTo = (category) => {
-        $location.url(String(category.title)+"/"+String(category.categoryId));
+        $location.url(`/category/${category.title}/id/${category.categoryId}`);
+        //TODO: If we could send an object to task controller use category.title for url location.
     }
 
 
