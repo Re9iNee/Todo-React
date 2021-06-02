@@ -1,6 +1,11 @@
 app.controller('taskCtrlr', function ($scope, $location, $interval, $routeParams) {
     // Init:
-    $scope.categoryTitle = "Today"
+    let {
+        title: categoryTitle,
+        id: categoryId
+    } = $routeParams;
+    $scope.categoryTitle = categoryTitle;
+    // TODO: type check
     const dbName = 'list5';
     $scope.searchMode = false;
     $scope.appState = 0;
