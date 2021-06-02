@@ -130,6 +130,7 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
         const result = resp.data.result.recordset;
         $scope.taskLists = result.slice();
     })
+    // Create
     $scope.addTask = async (title) => {
         if (!title) return
         // TODO: Validation
@@ -147,14 +148,15 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
         // NOTE: Add to angularJS array of object
         $scope.taskLists.push(...insertedRow);
         $scope.$apply();
-        // TODO: clear input bar text
+        $scope.taskName = '';
     }
-    $scope.deleteTask = (hashKey) => {
-        for (const [i, v] of $scope.taskLists.entries()) {
-            if (v.$$hashKey == hashKey) {
-                $scope.taskLists.splice(i, 1);
-            }
-        }
-        $scope.saveList(dbName, $scope.taskLists);
+    // Delete
+    $scope.deleteTask = async (index, id) => {
+        // first delete it from local array (front)
+        $scope.taskLists.splice(index, 1);
+        // then deleting from database
+        const deleteResult = await taskDB.delete({
+            taskId: id
+        });
     }
 })
