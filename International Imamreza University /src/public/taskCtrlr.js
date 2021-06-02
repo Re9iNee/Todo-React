@@ -1,5 +1,6 @@
-app.controller('taskCtrlr', ($scope, $interval) => {
+app.controller('taskCtrlr', function ($scope, $location, $interval, $routeParams) {
     // Init:
+    $scope.categoryTitle = "Today"
     const dbName = 'list5';
     $scope.searchMode = false;
     $scope.appState = 0;

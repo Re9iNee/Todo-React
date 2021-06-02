@@ -1,8 +1,15 @@
-let app = angular.module('myApp', ['ngAnimate'])
-app.config(($routeProvider) => {
+let app = angular.module('myApp', ['ngAnimate', 'ngRoute'])
+
+
+app.config(function ($routeProvider) {
     $routeProvider
-        .when("/category/:categoryTitle/id/:categoryId", {
-            templateUrl: 'task.html',
-            controller: 'taskCtrlr'
+        .when("/category/Today/id/1", {
+            templateUrl: "task.html",
+            controller: "taskCtrlr"
         })
-})
+        .when("/CategoryTitle/:title/id/:categoryId", {
+            templateUrl: "task.html",
+            controller: "taskCtrlr"
+        })
+        .otherwise("/category/Today/id/1")
+});
