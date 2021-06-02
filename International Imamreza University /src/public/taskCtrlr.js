@@ -1,6 +1,6 @@
 app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
     // Init:
-    let {
+    const {
         title: categoryTitle,
         id: categoryId
     } = $routeParams;
@@ -130,16 +130,24 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
         const result = resp.data.result.recordset;
         $scope.taskLists = result.slice();
     })
+    $scope.addTask = async (title) => {
         if (!title) return
-        $scope.taskLists.push({
-            title: title,
-            checked: false,
-            favourite: false,
-            created: Date.now(),
-            $$hashKey: `object:${String(Date.now())+String($scope.taskLists.length)+String(Math.random())}`,
-        })
-        $scope.saveList(dbName, $scope.taskLists);
-        $scope.taskName = "";
+        // TODO: Validation
+        const create = async (title) => {
+            const result = await taskDB.create({
+                title,
+                categoryId
+            })
+            return result;
+        }
+        const id = await create(title);
+        const insertedRow = await taskDB.read({
+            taskId: id
+        });
+        // NOTE: Add to angularJS array of object
+        $scope.taskLists.push(...insertedRow);
+        $scope.$apply();
+        // TODO: clear input bar text
     }
     $scope.deleteTask = (hashKey) => {
         for (const [i, v] of $scope.taskLists.entries()) {
