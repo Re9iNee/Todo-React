@@ -159,4 +159,10 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
             taskId: id
         });
     }
+    // Update
+    $scope.update = async (id, vals) => {
+        const updateResult = await taskDB.update({
+            taskId: id
+        }, vals);
+    }
 })
