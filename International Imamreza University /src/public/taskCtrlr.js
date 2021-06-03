@@ -145,14 +145,19 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
             })
             return result;
         }
-        const id = await create(title);
-        const insertedRow = await taskDB.read({
-            taskId: id
-        });
-        // NOTE: Add to angularJS array of object
-        $scope.taskLists.push(...insertedRow);
-        $scope.$apply();
-        $scope.taskName = '';
+        const result = await create(title);
+        if (typeof result == "number") {
+            const insertedRow = await taskDB.read({
+                taskId: result
+            });
+            // NOTE: Add to angularJS array of object
+            $scope.taskLists.push(...insertedRow);
+            $scope.taskName = '';
+            $scope.$apply();
+        }
+        else if (result.status == "Failed"){
+            // TODO: Send an error message to user telling him its wrong.
+        }
     }
     // Delete
     $scope.deleteTask = async (index, id) => {
