@@ -7,7 +7,7 @@
                     <input type="checkbox" id="" ng-model="task.checked">
                 </section>
                 <label style="text-decoration: {{ task.checked ? 'line-through;' : 'none'}}"
-                    ng-click="changeTaskName(task.title, task.$$hashKey); changeAppState(1);">{{ task.title }}</label>
+                    ng-click="changeTaskName(task.title, task.taskId); changeAppState(1);">{{ task.title }}</label>
             </section>
             <section class="iconTouchTarget" ng-click="deleteTask($index, task.taskId)">
                 <svg width="19" height="22" xmlns="http://www.w3.org/2000/svg">

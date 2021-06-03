@@ -6,19 +6,18 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
     } = $routeParams;
     $scope.categoryTitle = categoryTitle;
     // TODO: type check
-    const dbName = 'list5';
     $scope.searchMode = false;
     $scope.appState = 0;
-    $scope.tempHash = null;
-    $scope.changeTaskName = (to, hashKey) => {
-        $scope.tempHash = hashKey;
-        $scope.taskName = String(to);
+    $scope.tempTaskId = null;
+    $scope.changeTaskName = (from, id) => {
+        $scope.tempTaskId = id;
+        $scope.taskName = String(from);
         $scope.focusOnInput();
     }
     $scope.focusOnInput = () => {
         document.getElementById("my-input").focus();
     }
-    $scope.submitForm = (taskName) => {
+    $scope.submitForm = async (taskName) => {
         // appState: 0 -> add || 1-> editMode || 2 -> searchMode 
         switch ($scope.appState) {
             case 0: {
@@ -26,15 +25,20 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
                 break;
             }
             case 1: {
-                for (let v of $scope.taskLists) {
-                    if (!$scope.tempHash) return
-                    if (v.$$hashKey == $scope.tempHash) {
-                        v.title = taskName;
-                        $scope.taskName = "";
-                        $scope.changeAppState(0);
+                const updateResult = await $scope.update($scope.tempTaskId, {
+                    title: taskName
+                });
+                if (updateResult.status != "Failed")
+                    for (let v of $scope.taskLists) {
+                        if (!$scope.tempTaskId) return
+                        if (v.taskId == $scope.tempTaskId) {
+                            v.title = taskName;
+                        }
                     }
-                }
-                $scope.saveList(dbName, $scope.taskLists);
+                // TODO: if update is a failed. show the result to User (UX)
+                $scope.taskName = "";
+                $scope.changeAppState(0);
+                $scope.$apply();
                 break;
             }
             case 2: {
@@ -164,5 +168,6 @@ app.controller('taskCtrlr', function ($scope, $http, $routeParams) {
         const updateResult = await taskDB.update({
             taskId: id
         }, vals);
+        return updateResult;
     }
 })
