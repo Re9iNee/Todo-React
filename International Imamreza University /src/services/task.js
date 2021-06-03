@@ -95,7 +95,7 @@ const ws_createTask = async (connection, details = new Object(null)) => {
     // NOTE: "title" + categoryId
     const duplicateUniques = await checkDuplicate(connection, {
         title,
-        categoryId: categoryId ? categoryId : 1
+        categoryId: categoryId ? Number(categoryId) : 1
     }, ws_loadTask);
     if (duplicateUniques)
         return {
