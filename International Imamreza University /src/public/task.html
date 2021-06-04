@@ -1,7 +1,7 @@
     <header>{{ categoryTitle }}</header>
     <main class="tasks">
         <section class="task animate-repeat"
-            ng-repeat="task in taskLists | orderBy: 'checked' : true | filter: searchTerm">
+            ng-repeat="task in taskLists | filter: searchTerm">
             <section class="center">
                 <section class="iconTouchTarget" ng-click="update(task.taskId, {checked: task.checked})">
                     <input type="checkbox" id="" ng-model="task.checked">
