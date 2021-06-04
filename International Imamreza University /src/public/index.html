@@ -42,7 +42,7 @@
         <main class="tasks">
             <section class="task animate-repeat" ng-repeat="category in categories">
                 <section class="center">
-                    <section class="iconTouchTarget" ng-click="update(category.categoryId, category.checked)">
+                    <section class="iconTouchTarget" ng-click="update(category.categoryId, {checked: category.checked})">
                         <input type="checkbox" id="" ng-model="category.checked">
                     </section>
                     <label ng-click="navigateTo(category)">{{ category.title }}</label>

@@ -38,13 +38,10 @@ app.controller('categoryCtrlr', async ($scope, $location) => {
     $scope.$apply();
 
     // Update
-    $scope.update = async (id, checked) => {
-        // TODO: this only works if you wanna mark items as checked. for later features you should modify this method for more flexibility.
+    $scope.update = async (id, vals) => {
         const updateResult = await categoryDB.update({
             categoryId: id
-        }, {
-            checked
-        });
+        }, vals);
     }
 
     // Delete
