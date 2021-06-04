@@ -91,19 +91,6 @@ const ws_createTask = async (connection, details = new Object(null)) => {
             notNullColumns
         }
 
-    // check for duplicates (unique Columns)
-    // NOTE: "title" + categoryId
-    const duplicateUniques = await checkDuplicate(connection, {
-        title,
-        categoryId: categoryId ? Number(categoryId) : 1
-    }, ws_loadTask);
-    if (duplicateUniques)
-        return {
-            status: "Failed",
-            msg: "Error Creating Row, Violation of unqiue values",
-            uniqueColumn: "title + categoryId",
-            details
-        }
     // NOTE: Auto Generate Date And Time
     const d = new Date();
     details.dateCreated = getDate(d);
@@ -160,24 +147,6 @@ const ws_updateTask = async (connection, taskId, newValues = new Object(null)) =
         taskId
     }, null, 1);
     //TODO: change categoryId on this record [feature]
-    if ("title" in newValues) {
-        const {
-            title
-        } = newValues;
-        const categoryId = filteredRow.recordset[0].categoryId;
-        // NOTE: Unique Columns: "title" + categoryId
-        const duplicateUniques = await checkDuplicate(connection, {
-            title,
-            categoryId
-        }, ws_loadTask);
-        if (duplicateUniques)
-            return {
-                status: "Failed",
-                msg: "Error Creating Row, Violation of unique values",
-                uniqueColumn: "title",
-                newValues
-            }
-    }
 
     // check for custome Validation
     // NOTE: dateModified should be bigger than dateCreated

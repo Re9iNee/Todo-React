@@ -74,20 +74,6 @@ const ws_createCategory = async (connection, details = new Object(null)) => {
             notNullColumns
         }
 
-    // check for duplicates (unique Columns)
-    // NOTE: "title"
-    const duplicateUniqueTitle = await checkDuplicate(connection, {
-        title
-    }, ws_loadCategory);
-    if (duplicateUniqueTitle)
-        return {
-            status: "Failed",
-            msg: "Error Creating Row, Violation of unique values",
-            uniqueColumn: "title",
-            details
-        }
-
-
     // NOTE: Auto Generate Date And Time
     const d = new Date();
     details.dateCreated = getDate(d);
@@ -142,22 +128,6 @@ const ws_updateCategory = async (connection, categoryId, newValues = new Object(
     const filteredRow = await ws_loadCategory(connection, {
         categoryId
     }, null, 1);
-
-    if ("title" in newValues) {
-        const {
-            title
-        } = newValues;
-        const duplicateUniqueTitle = await checkDuplicate(connection, {
-            title
-        }, ws_loadCategory);
-        if (duplicateUniqueTitle)
-            return {
-                status: "Failed",
-                msg: "Error Creating Row, Violation of unique values",
-                uniqueColumn: "title",
-                newValues
-            }
-    }
 
     //  check for custome Validation
     // NOTE: dateModified should be bigger than dateCreated
