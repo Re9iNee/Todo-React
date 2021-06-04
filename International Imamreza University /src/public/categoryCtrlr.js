@@ -28,8 +28,8 @@ app.controller('categoryCtrlr', async ($scope, $location) => {
         // NOTE: Add to angualarJS array of object
         // NOTE: if we want to relaod the page it would load all categories again
         $scope.categories.push(...insertedRow);
+        $scope.newCategoryName = '';
         $scope.$apply();
-        // TODO: clear input bar text
     }
 
     // Read
