@@ -13,13 +13,10 @@
     <link rel="stylesheet" href="animation.css">
 </head>
 <!-- 
-    TODO: connect api 
-        TODO: connect tasks
-            TODO: get all tasks that has a categoryId of ... or categoryTitle of ... (Load)
-            TODO: when inserting a task create that task into database(Create)
-            TODO: on checked/favourite/rename update task (Update)
-            TODO: on delete (Delete)
-        TODO: connect categories
+    NOTE: API
+        NOTE: tasks
+            ANCHOR: [Feature] on favourite update task (Update)
+        NOTE: categories
             ANCHOR: [Feature] on rename update task (Update)
             ANCHOR: [Feature] on favourite category (Update)
             
@@ -59,7 +56,7 @@
             <form name="categoryForm" class="input" ng-submit="submit($event)">
                 <input type="text" name="newCatTitle" ng-model="newCategoryName" placeholder="New Project Title"
                     autofocus>
-                <!-- TODO: debounce, ng-model-options -->
+                <!-- TODO: debounce, ng-model-options -> to check for unique column validation -> how about removing titles being unique column -->
                 <button action="POST" type="submit">
                     <section class="iconTouchTarget" ng-click="" title="Add">
                         <svg width="24" height="24">
