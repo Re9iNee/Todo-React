@@ -41,7 +41,7 @@
                     <section class="iconTouchTarget" ng-click="update(category.categoryId, {checked: category.checked})">
                         <input type="checkbox" id="" ng-model="category.checked">
                     </section>
-                    <label ng-click="navigateTo(category)">{{ category.title }}</label>
+                    <label style="text-decoration: {{ category.checked ? 'line-through;' : 'none'}}" ng-click="navigateTo(category)">{{ category.title }}</label>
                 </section>
                 <section class="iconTouchTarget" ng-click="delete($index ,category.categoryId);">
                     <svg width="19" height="22" xmlns="http://www.w3.org/2000/svg">
