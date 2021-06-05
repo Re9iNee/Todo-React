@@ -179,6 +179,15 @@ body {
 }
 
 /* Details: */
+.no_border {
+    border: none;
+}
+.trans_backg {
+    background: transparent;
+}
+.text_center {
+    text-align: center;
+}
 .container {
     background-color: rgb(30, 30, 30);
 }
