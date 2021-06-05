@@ -30,9 +30,9 @@
 -->
 
 <body ng-app="myApp">
-    <sidebar class="container" ng-controller="categoryCtrlr">
+    <sidebar id="category_container" class="container" ng-controller="categoryCtrlr">
         <header>
-            <h1 class="text_center"> {{ sideBarHeader }} </h1>
+            <h1 class="text_center" id="category_header"> {{ sideBarHeader }} </h1>
         </header>
 
         <main class="tasks">
@@ -72,7 +72,7 @@
         </footer>
 
     </sidebar>
-    <div class="container" ng-view>
+    <div class="container" id="task_container" ng-view>
 </body>
 
 </html>
