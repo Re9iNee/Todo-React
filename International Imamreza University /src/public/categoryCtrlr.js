@@ -14,6 +14,7 @@ app.controller('categoryCtrlr', async ($scope, $location) => {
 
     // Create
     $scope.submit = async ($event) => {
+        // FIXME: if it has no title it will create a row anyway
         const title = $scope.categoryForm.newCatTitle.$$rawModelValue;
         // TODO: VALIDATION
         // NOTE: creating a row in databse
@@ -24,6 +25,7 @@ app.controller('categoryCtrlr', async ($scope, $location) => {
             return result;
         };
         const id = await create(title);
+        // FIXME: if reading from database contains error it will throw an error without catch block
         const insertedRow = await categoryDB.read({categoryId: id});
         // NOTE: Add to angualarJS array of object
         // NOTE: if we want to relaod the page it would load all categories again

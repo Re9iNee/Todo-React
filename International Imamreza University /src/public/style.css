@@ -133,6 +133,15 @@ label {
     src: url("./extras/Fonts/AvenirBook(Bold).otf");
 }
 
+@font-face {
+    font-family: "LilitaOne";
+    src: url("./extras//Fonts/LilitaOne-Regular.ttf");
+}
+
+#category_header {
+    font-family: "LilitaOne";
+}
+
 header {
     font-family: "AvenirBold";
     font-size: 2.2rem;
@@ -179,8 +188,24 @@ body {
 }
 
 /* Details: */
+.no_border {
+    border: none;
+}
+.trans_backg {
+    background: transparent;
+}
+.text_center {
+    text-align: center;
+}
 .container {
     background-color: rgb(30, 30, 30);
+}
+
+#category_container {
+    flex-shrink: 5;
+}
+#task_container {
+    flex-shrink: 1;
 }
 
 .input input:focus,
