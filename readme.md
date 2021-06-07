@@ -13,7 +13,9 @@ AngularJS-powered HTML5 Markdown editor.
 - ✨Magic ✨
 ## Pre-requirements
 ## Installation
+## Packages
 ## Features
+## License
 
 - Import a HTML file and watch it magically convert to Markdown
 - Drag and drop images (requires your Dropbox account be linked)
@@ -163,7 +165,7 @@ your preferred browser.
 127.0.0.1:8000
 ```
 
-## License
+
 
 MIT
 
